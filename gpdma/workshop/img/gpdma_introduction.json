@@ -1,0 +1,9 @@
+{
+    "interval":1500,
+    "sequence":[
+    {"name":"Slide5.jpg"},
+    {"name":"Slide6.jpg"},
+    {"name":"Slide10.jpg"},
+    {"name":"Slide11.jpg"}
+]
+}

@@ -7,7 +7,7 @@ Our goal is to learn about GPDMA features
 
 Overview of advanced features (extention of our handson)
 
-* Tiggers
+* Triggers
 * Events (optional)
 * 2D addresing (optional)
 

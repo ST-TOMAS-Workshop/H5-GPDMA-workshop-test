@@ -41,13 +41,14 @@ Contain position of nest GPDMA node
 In our case each linked list node will update this GPDMA registers.
 After previous GPDMA node is finished. 
 
-TR1 - Transfer register 1
-TR2 - Transfer register 2
-BR1 - blck register 1
-SAR - Source address register 
-DAR - Destination address register
-TR3 - Transfer register 3
-BR2 - Block register 2 
-LLR - Linker list register
-
-This is automatically reconfiguring the GPDMA channel. 
+TR1 - Transfer register 1<br>
+TR2 - Transfer register 2<br>
+BR1 - Block register 1<br>
+SAR - Source address register <br>
+DAR - Destination address register<br>
+TR3 - Transfer register 3<br>
+BR2 - Block register 2<br>
+LLR - Linker list register<br>
+<br>
+This is automatically reconfiguring the GPDMA channel.<br>
+<br>

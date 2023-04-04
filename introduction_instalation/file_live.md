@@ -1,4 +1,4 @@
---!
+----!
 Presentation
 ----!
 
@@ -36,23 +36,21 @@ See you on STM32H5 Workshop live session
 # Prerequisites
 - Hardware:
   - **PC with MS Windows 10 operating system and admin rights granted**
-  - **1 USB-C** cable 
+  - **1 micro-USB** cable 
   <br>
   ![microUSB cables](./img/uUSB.jpg)
   <br>
-  - **[STM32H573I-DK](https://www.st.com/en/evaluation-tools/stm32h573i-dk.html)** discovery kit 
+  - **[NUCLEO-STM32H563ZI](https://www.st.com/en/evaluation-tools/nucleo-h563zi.html)** Nucleo-144 development board 
   <br>
-  ![H5_DK](./img/H573I-DK.jpg)
+  ![H5_DK](./img/NUCLEO-H563ZI.jpg)
   <br>
 - Software (PC with **MS Windows 10** operating system):
-  - **[STM32CubeMX](https://www.st.com/en/development-tools/stm32cubemx.html)** in version 6.7.0
-  - **[STM32CubeIDE](https://www.st.com/en/development-tools/stm32cubeide.html)** in version 1.11.0
+  - **[STM32CubeMX](https://www.st.com/en/development-tools/stm32cubemx.html)** in version 6.8.0
+  - **[STM32CubeIDE](https://www.st.com/en/development-tools/stm32cubeide.html)** in version 1.12.0
   - **[STM32H5 Cube library](https://www.st.com/en/embedded-software/stm32cubeh5.html)** in version 1.0.0
   - **[Virtual COM port drivers](https://www.st.com/en/development-tools/stsw-stm32102.html)**
   - `[optionally]` any **terminal** application (can be used the one from STM32CubeIDE)
 <br>
-
-
 
 # Installation process
 - download **STM32CubeMX** from [here](https://www.st.com/en/development-tools/stm32cubemx.html)
@@ -67,11 +65,11 @@ See you on STM32H5 Workshop live session
 <br>
 ![H5_Lib_Install](./img/H5Lib.jpg)
 <br>
-In case of library installation problems please try an alternative way:
-    - download **STM32H5 Cube library** (.zip file)
-    - run **STM32CubeMX**
-    - go to `Help -> Manage Embedded Software Packages`
-    - within package manager window use option `From local` 
+- In case of library installation problems please try an alternative way:
+  - download **STM32H5 Cube library** (.zip file)
+  - run **STM32CubeMX**
+  - go to `Help -> Manage Embedded Software Packages`
+  - within package manager window use option `From local` 
 <br>  
 ![U5_Lib_Install_from_local](./img/H5Lib_local.jpg)
 <br>
@@ -84,12 +82,13 @@ STM32CubeMX and STM32CubeIDE are using the same repository by default, so instal
 <br>
 ----
 
-# Verification process
+
+# Verification process before you visit us
 The purpose of this part is checking whether all software components are installed properly.
 <br>
 Additionally prepared test project can be a base for next hands-on parts during the workshop.
 
-## ** 1 STM32CubeIDE and STM32H5 Cube library**
+## **STM32CubeIDE and STM32H5 Cube library**
 <br>
 
 ----
@@ -97,13 +96,15 @@ Additionally prepared test project can be a base for next hands-on parts during 
 <br>
 **Task definition**
 <br>
-- Using STM32CubeIDE:
- - Configure system clock (SYSCLK and HCLK) to 4MHz using internal MSI oscillators (default settings)
- - Configure ICACHE (in any of available modes)
- - Select and configure USART1:
-   - in asynchronous mode, 
-   - using default settings (115200bps, 8D, 1stop bit, no parity) 
-   - on PA9/PA10 pins
+
+- Using STM32CubeIDE
+  - Enable SWD for debug
+  - Disable TrustZone
+  - Configure ICACHE (in any of available modes)
+- Select and configure USART3
+  - in asynchronous mode,
+  - using default settings (115200bps, 8D, 1stop bit, no parity) 
+  - on PA9/PA10 pins
 <br>
 
 ----
@@ -111,9 +112,9 @@ Additionally prepared test project can be a base for next hands-on parts during 
 <br>
 ## **Step1** - project creation and peripherals configuration
  - Run **STM32CubeIDE**
- - Specify workspace location (i.e. `C:\_Work\U5_WS`)
+ - Specify workspace location (i.e. `C:\_Work\H5_GPDMA`)
 <br>
-![Workspace_start](./img/New_prj_start.gif)
+![Workspace_start](./img/CubeIDE_WS.apng)
 <br>
 - Start new project using one of the below methods:
   - by selecting `File->New->STM32Project` 
@@ -121,76 +122,99 @@ Additionally prepared test project can be a base for next hands-on parts during 
   <br>
   ![Workspace_start2](./img/New_prj_start_2.gif)
 <br>
-- select STM32**U575ZI**TxQ MCU (the one present on NUCLEO-U575ZI-Q board)
+- switch to **Board Selector** tab
+- select NUCLEO-**H563**ZI board
 - press `Next` button
 - within STM32 Project window:
-  - specify project name (i.e. `U5_Basic`)
+  - specify project name (i.e. `H5_UART`)
   - keep **enable TrustZone** option unchecked
   - press `Finish` button
-  - on warning pop-up window press `Yes` button
+  - on question pop-up window "Initialize all peripherals with their default state?" press `No` button 
+  - on question pop-up window "Switch to proper CubeIDE perspective?", if it is showed, press `Yes` button 
+  - on worning pop-up window "Do you still want a code generation?", press `No` button 
+  - on following information pop-up window, it was our decision did not generate code, press `OK` button 
   <br>
-   ![Workspace_start3](./img/New_prj_start_3.gif)
-<br>
-- within **Clock Configuration** tab:
-  - keep the default settings (4MHz based on MSI)
-<br>
-  ![Clock configuration](./img/Clock_conf.gif)
+   ![Workspace_start3](./img/CubeIDE_Start.apng)
 <br>
 - Peripherals configuration: Pinout&Configuration tab
 - **ICACHE configuration** (System Core group)
   - select either 1-way or 2-ways (we will not focus on performance within this workshop)
   <br>
-  ![ICACHE configuration](./img/ICACHE_conf.gif)
+  ![ICACHE configuration](./img/CubeIDE_ICACHE.apng)
   <br>
-- **USART1 configuration** (Connectivity group)
+- **USART3 configuration** (Connectivity group)
   - select Asynchronous mode
   - keep default settings in configuration:
     - Basic parameters: 115200bps, 8bits data, 1 stop bit, no parity
-    - Pins assignment: PA9, PA10
+    - Pins assignment: PD8, PD9
     - no interrupts, no DMA usage
   <br>
-    ![USART1 configuration](./img/USART1_conf.gif)
+    ![USART3 configuration](./img/CubeIDE_UART.apng)
+<br>
+- **SWD configuration** (Trace and debug group)
+  - select Serial wire debug
+  - this is usually not necessary, because of default state of SWD pins, but it is good habit to do it
+  <br>
+    ![SWD configuration](./img/CubeIDE_SWD.apng)
 <br>
 - **Project settings**
   - select `Project Manager` tab
   - check project location (.ioc file)
   - check project name
 <br>
-   ![Project settings](./img/Prj_settings.gif)
+   ![Project settings](./img/CubeIDE_Proj.apng)
 <br>
   - generate project by one of the ways:
     - by pressing "gear" icon
     - by select `Project->Generate Code`
     - by pressing **Alt+K**
 <br>
-  ![Project generation](./img/Prj_gen.gif)
+  ![Project generation](./img/CubeIDE_GenCode.apng)
 <br>
- - In case you see a warning pop-up window concerning SMPS configuration, please OK. This will be explained in next parts of the session.
 
 ----
 
 <br>
 ## **Step2** - coding part (`main.c` file)
 <br>
-Define the buffer of bytes to be sent over **USART1** (`USER CODE PV` section):
+Define the buffer of bytes to be sent over **USART3** (`USER CODE PV` section):
 <br>
 
 ```c
-uint8_t buffer[]={"Homework exercise\n"};
+  uint8_t buffer[]={"Hello STM32H5\r\n"};
 ```
 
 <br>
-![Coding1](./img/Code_copy1.gif)
+![Coding1](./img/CubeIDE_Coding1.apng)
 <br>
-Start transmit of the data over **USART1** using prepared buffer and ***polling*** method (`USER CODE 2` section):
+Turn on **LED1_GREEN** (`USER CODE 2` section):
 <br>
 
 ```c
-HAL_UART_Transmit(&huart1, buffer, 18, 200);
+  HAL_GPIO_WritePin(LED1_GREEN_GPIO_Port, LED1_GREEN_Pin, 1);
 ```
 
 <br>
-![Coding2](./img/Code_copy2.gif)
+![Coding2](./img/CubeIDE_Coding2.apng)
+<br>
+Toggle **LED1_GREEN** (`USER CODE 3` section)
+<br>
+Toggle **LED2_YELLOW** 
+<br>
+Start transmit of the data over **USART3** using prepared buffer and ***polling*** method
+<br>
+Wait for 250 ms
+<br>
+
+```c
+  HAL_GPIO_TogglePin(LED1_GREEN_GPIO_Port, LED1_GREEN_Pin);
+  HAL_GPIO_TogglePin(LED2_YELLOW_GPIO_Port, LED2_YELLOW_Pin);
+  HAL_UART_Transmit(&huart3, buffer, 15, 200);
+  HAL_Delay(250);
+```
+
+<br>
+![Coding3](./img/CubeIDE_Coding3.apng)
 <br>
 
 ----
@@ -199,19 +223,12 @@ HAL_UART_Transmit(&huart1, buffer, 18, 200);
 ## **Step 3** - build the project
 - Build the project using `hammer` button or `Project->Built All` or **Ctrl+B**
 <br>
-![Project build](./img/Build.gif)
+![Project build](./img/CubeIDE_Build.apng)
 <br>
 
 <ainfo>
 In case of neither errors nor warnings after this process, STM32CubeIDE and STM32U5 library are installed correctly. Last point - debug session will be verified during first hands on part on the workshop.
 </ainfo>
-
-## ** 2 STM32CubeMonitorPower **
-
-Please start STM32CubeMonitorPwr and check that you can see similar window as a final effect.
-<br>
-![STM32CubeMonitorPwr](./img/CubeMonPwr.gif)
-<br>
 
 
 <ainfo>
@@ -221,19 +238,9 @@ Please start STM32CubeMonitorPwr and check that you can see similar window as a 
 ----
 
 
-# **Appendix A** - Board overview
- <br>
-**NUCLEO-U575ZI-Q** board
-[schematics](https://www.st.com/resource/en/schematic_pack/mb1549-u575ziq-c03_schematic.pdf)
-![NUCLEO-U575ZI-Q board](./img/Nucleo_U5_overview.jpg)
 <br>
 
-----
-
-
-<br>
-
-# **Appendix B** - configuration and start **STM32CubeIDE** built-in terminal  
+# **Appendix A** - configuration and start **STM32CubeIDE** built-in terminal  
 <br>
 ### You can follow dedicated video on this topic [here from 8:50](https://www.youtube.com/watch?v=JWOV4j5fCS4&list=PLnMKNibPkDnFCosVVv98U5dCulE6T3Iy8&index=11&t=569s)
 
@@ -255,13 +262,12 @@ Please start STM32CubeMonitorPwr and check that you can see similar window as a 
 - Access to tools dedicated web pages:
   - [STM32CubeIDE](https://www.st.com/en/development-tools/stm32cubeide.html)
   - [STM32CubeMX](https://www.st.com/en/development-tools/stm32cubemx.html)
-  - [STM32U5 Cube library](https://www.st.com/en/embedded-software/stm32cubeu5.html)
-  - [STM32CubeMonitorPower](https://www.st.com/en/development-tools/stm32cubemonpwr.html)
+  - [STM32H5 Cube library](https://www.st.com/en/embedded-software/stm32cubeh5.html)
 - [STM32 on-line training resources](https://www.st.com/content/st_com/en/support/learning/stm32-education/stm32-moocs.html)
 - documentation
-  - [STM32U575 datasheet](https://www.st.com/resource/en/datasheet/stm32u575zi.pdf)
-  - [STM32U575 reference manual](https://www.st.com/resource/en/reference_manual/rm0456-stm32u575585-armbased-32bit-mcus-stmicroelectronics.pdf)
-  - [NUCLEO-U575ZI-Q board schematics](https://www.st.com/resource/en/schematic_pack/mb1549-u575ziq-c03_schematic.pdf)
+  - [STM32H563 datasheet](https://www.st.com/resource/en/datasheet/stm32h563zi.pdf)
+  - [STM32H563 reference manual](https://www.st.com/resource/en/reference_manual/rm0456-stm32u575585-armbased-32bit-mcus-stmicroelectronics.pdf)
+  - [NUCLEO-H563ZI-Q board schematics](https://www.st.com/resource/en/schematic_pack/mb1549-u575ziq-c03_schematic.pdf)
 
 
   Alternatively you can download complete set of offline materials from [this link](https://github.com/RRISTM/stm32u5_workshop/tree/master/material_pdf)
@@ -275,23 +281,25 @@ Please start STM32CubeMonitorPwr and check that you can see similar window as a 
 - Please start STM32CubeIDE and open the project prepared before the session.
 - Connect board to PC using micro-USB cable. Multicolor LED (right side of USB connector) should be turned on (red color)
 <br>
-![Board connection](./img/Nucleo_connect.gif)
+![Board connection](./img/USB_connect.apng)
 <br>
 - Start the debug session using `bug` icon or `Run->debug` or by pressing **F11**
 - All the settings should be automatically set based on your compiled project. Press `OK` button
 - At this moment you may see an information window that your STLink firmware is not up-to-date,
 - please accept this message and perform automatic upgrade process
+- disconnect and conect USB cable
 <br>
-![STLink_upgrade](./img/STLink_upgrade.gif)
+![STLink_upgrade](./img/CubeIDE_Upgrade.apng)
 <br>
+- Once more start the debug session using `bug` icon or `Run->debug` or by pressing **F11**
 - Select `Switch` within `Configure Perspective Switch` dialog which is informing about new (debug one) windows setup within STM32CubeIDE application.
-<br>
-![Project debug](./img/start_debug.gif)
-<br>
 - Start terminal application and run it for virtual COM port number assigned to the NUCLEO board with settings: 115200bps, 8bits data, 1 stop bit, no parity, no HW control. As an alternative you can use STM32CubeIDE built-in terminal (please have a look within Appendix for more details)
-- run the application within debug session. As a result within terminal there should be "Homework exercise" message displayed.
+- run the application within debug session. As a result within terminal there should be "Hello STM32H5" messages displayed.
+<br>
+![Project debug](./img/CubeIDE_Debug.apng)
+<br>
   <br>
-![Final app](./img/App_run_small.gif)
+![Final app](./img/H563_Run.apng)
 <br>.
 
 ----
