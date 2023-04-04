@@ -6,7 +6,10 @@ Presentation
 
 The events can allow GPDMA to generate interrupts/events or disable this functionality so not interrupt/event wil be created by DMA channel. 
 
-We will set GPDMA only to generte the event/interrupt with last node in list
+We will set GPDMA only to generte the event/interrupt with last node in list.
+
+We will add LED1's control as Heartbeat - faster, regular flashing<br>
+and LED2's toggle at the end of transfer.
 
 # Generate event in block transfer
 
