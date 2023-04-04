@@ -127,7 +127,7 @@ and LED2's toggle at the end of transfer.
 You can go through this hands-on step by step yourself 
 </asuccess>
 
-Cheat sheet you can find at this link<br>
-![GIT HUB CHEAT SHEET](https://rristm.github.io/tomas_materials_v2/Jiri-Antos-ST/H5-GPDMA-workshop-test/main)).<br>
+Cheat sheet you can find at this link to 
+[GitHUB](https://rristm.github.io/tomas_materials_v2/Jiri-Antos-ST/H5-GPDMA-workshop-test/main).<br>
 It takes approximately 60 - 90 minutes.
 
