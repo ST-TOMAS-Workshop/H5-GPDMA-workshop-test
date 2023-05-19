@@ -107,6 +107,18 @@
     {
       "path": "/gpdma/workshop",
       "file": "9_gpdma_theory_link.md"
+    },
+    {
+      "path": "/i3c",
+      "file": "handson_i3c.md"
+    },
+    {
+      "path": "/gpdma",
+      "file": "handson_gpdma.md"
+    },
+    {
+      "path": "/retention",
+      "file": "handson_gpio.md"
     }
   ],
   "menuStructure": [
@@ -123,7 +135,40 @@
     },
     {
       "type": "Folder",
-      "name": "GPDMA",
+      "name": "GPIO RETENTION",
+      "children": [
+        {
+          "name": "Hands-on",
+          "type": "File",
+          "file": "handson_gpio.md"
+        }
+      ]
+    },    
+    {
+      "type": "Folder",
+      "name": "I3C with LSM6DSO",
+      "children": [
+        {
+          "name": "Hands-on",
+          "type": "File",
+          "file": "handson_i3c.md"
+        }
+      ]
+    },    
+    {
+      "type": "Folder",
+      "name": "GPDMA - short",
+      "children": [
+        {
+          "name": "Hands-on",
+          "type": "File",
+          "file": "handson_gpdma.md"
+        }
+      ]
+    },    
+    {
+      "type": "Folder",
+      "name": "GPDMA - full",
       "children": [
         {
           "name": "1. Introduction",
@@ -265,11 +310,11 @@
     },
     {
       "type": "Folder",
-      "name": "DEMO",
+      "name": "GPDMA - demo",
       "children": [
         {
           "type": "File",
-          "name": "Demo sessions",
+          "name": "Demo session",
           "file": "10_gpdma_handson_demo.md"
         }
       ]
