@@ -118,6 +118,15 @@ This is just to get rid of a warning when generating the code, not essential for
 
 ![](./img/2_mx_i3c_init_config.png)
 
+# Exclude stm32h5xx_util_i3c.c
+
+1. Locate file Drivers\STM32H5xx_HAL_Driver\Src\stm32h5xx_util_i3c.c
+2. Right-click on file and select Resource Configurations > Exclude from Build...
+3. Check both Debug and Release
+
+![](./img/2_ide_exclude_i3c_utils.png)
+![](./img/2_ide_exclude_i3c_utils2.png)
+
 # Create Core\Src\i3c_reg_io.c
 
 Create new source file Core\Src\i3c_reg_io.c with following content:
