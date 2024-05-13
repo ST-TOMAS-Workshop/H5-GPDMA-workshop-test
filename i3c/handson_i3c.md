@@ -28,16 +28,16 @@ At the moment (May 2023), the X-CUBE-MEMS1 package doesn't support I3C, so we wi
 # Create new project (2/3)
 
 1. **Name** the project, leave rest of values to default
-2. When prompted "Initialize all peripherals in default mode", select **Yes**
-	* This should configure USART3 and ICACHE, so we don’t need to do it manually
-
-![Creating project](./img/2_creating_project.png)
+	![Creating project](./img/2_creating_project_new.png)
+2. **Deselect** all the components for BSP, since we will configure them manually
+	![Deselect components](./img/2_project_bsp.png)
 
 # Create new project(3/3)
 
-1. Deselect all the components for BSP, since we will configure them manually
+1. When prompted if you want to generate code, select No
+	* We will configure ICache with other peripherals and generate project later
 
-![Deselect components](./img/2_project_bsp.png)
+![ICACHE prompt](./img/2_project_icache.png)
 
 # Configure I3C peripheral
 
@@ -70,6 +70,7 @@ We will configure it as GPIO_EXTI.
 ![PE14 GPIO_EXTI](./img/2_pe14_exti.png)
 
 We will also enable the interrupt in **GPIO** > **NVIC** configuration. This will generate code for the corresponding interrupt handler.
+We enable both EXTI Line 14 and EXTI Line 13 (push button) interrupts
 
 ![PE14 EXTI interrupt](./img/2_pe14_nvic.png)
 
@@ -384,3 +385,7 @@ Modify user code section in file MEMS\Target\iks01a3_conf.h:
 ```
 
 This will overwrite the BSP to use I3C functions we created in i3c_reg_io.c/.h files.
+
+# Compile and run the project
+
+Compile and run the project
