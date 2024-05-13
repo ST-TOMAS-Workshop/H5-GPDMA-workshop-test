@@ -15,7 +15,7 @@ It will allow us quickly setup LSM6DSO registers and create simple demo applicat
 
 At the moment (May 2023), the X-CUBE-MEMS1 package doesn't support I3C, so we will modify the project to use I3C instead via small hacks.
 
-# Create new project (1/2)
+# Create new project (1/3)
 
 1. Create new project in STM32CubeIDE.
 	* Make sure you are using version 1.12.0.
@@ -25,7 +25,7 @@ At the moment (May 2023), the X-CUBE-MEMS1 package doesn't support I3C, so we wi
 ![Selecting board](./img/2_selecting_board.png)
 
 
-# Create new project (2/2)
+# Create new project (2/3)
 
 1. **Name** the project, leave rest of values to default
 2. When prompted "Initialize all peripherals in default mode", select **Yes**
@@ -33,14 +33,20 @@ At the moment (May 2023), the X-CUBE-MEMS1 package doesn't support I3C, so we wi
 
 ![Creating project](./img/2_creating_project.png)
 
+# Create new project(3/3)
+
+1. Deselect all the components for BSP, since we will configure them manually
+
+![Deselect components](./img/2_project_bsp.png)
+
 # Configure I3C peripheral
 
 1. Enable I3C1 in **Controller** mode <br />
 	![Enable I3C](./img/2_i3c_enable.png)
 2. Enable event & error interrupts in NVIC <br />
 	![Enable I3C interrupts](./img/2_i3c_nvic.png)
-3. Set Mixed I3C and I2C and modify the frequencies <br />
-	![Configure I3C](./img/2_i3c_config.png)
+3. Set Pure I3C bus and modify the frequency and duty cycle <br />
+	![Configure I3C](./img/2_i3c_config_new.png)
 	
 # Move I3C pins to PB8/PB9
 
@@ -316,7 +322,7 @@ int32_t BSP_I3C_ReadReg(uint16_t Addr, uint16_t Reg, uint8_t *pData, uint16_t Le
 }
 ```
 
-# Create Core\Inc\i3c_reg_io.c
+# Create Core\Inc\i3c_reg_io.h
 
 Create new source file Core\Inc\i3c_reg_io.h with following content:
 
@@ -378,29 +384,3 @@ Modify user code section in file MEMS\Target\iks01a3_conf.h:
 ```
 
 This will overwrite the BSP to use I3C functions we created in i3c_reg_io.c/.h files.
-
-# Modify main.c
-
-Modify MX_I3C1_Init function to change the timing for I3C.
-At the moment the STM32CubeMX allows only configuration wiht hight pulse <50ns. This is unfortunately not compatible with level shifter on X-Nucleo-IKS01A3 board
-
-```c
-  /* USER CODE END I3C1_Init 1 */
-  hi3c1.Instance = I3C1;
-  hi3c1.Mode = HAL_I3C_MODE_CONTROLLER;
-  hi3c1.Init.CtrlBusCharacteristic.SDAHoldTime = HAL_I3C_SDA_HOLD_TIME_1_5;
-  hi3c1.Init.CtrlBusCharacteristic.WaitTime = HAL_I3C_OWN_ACTIVITY_STATE_0;
-  hi3c1.Init.CtrlBusCharacteristic.SCLPPLowDuration = 0x7c;   /* <---- */
-  hi3c1.Init.CtrlBusCharacteristic.SCLI3CHighDuration = 0x7c; /* <---- */
-  hi3c1.Init.CtrlBusCharacteristic.SCLODLowDuration = 0x7c;
-  hi3c1.Init.CtrlBusCharacteristic.SCLI2CHighDuration = 0x7c;
-  hi3c1.Init.CtrlBusCharacteristic.BusFreeDuration = 0x6a;
-  hi3c1.Init.CtrlBusCharacteristic.BusIdleDuration = 0xf8;
-  if (HAL_I3C_Init(&hi3c1) != HAL_OK)
-  {
-    Error_Handler();
-  }
-
-```
-
-
